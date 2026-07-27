@@ -11,6 +11,10 @@
 
 즉, 가격 투명성은 크롤링/입력 파이프라인 위에 올라간 조회·비교·감시 API의 문제이고, 이 저장소는 그중 API 레이어를 최소 형태로 구현한 것입니다.
 
+## 만든 과정
+
+Java/Spring 백엔드 경험을 바탕으로, Claude Code를 활용해 Django를 처음 접한 상태에서 약 3시간 만에 완성했습니다. Spring의 Entity–Repository–Controller 구조가 Django의 Model–ORM–ViewSet에 대응된다는 것을 확인하며 진행했고, Spring에서 fetch join으로 N+1 문제를 해결해본 경험을 살려 조회 시 select_related를 적용했습니다. 백엔드 기본기가 있으면 프레임워크 전환은 빠르다는 가설을 직접 검증한 결과물입니다.
+
 ## 기술 스택
 
 - Python / Django 6.0
@@ -23,25 +27,25 @@ Base URL: `http://127.0.0.1:8000`
 
 ### 1. 병원 CRUD — `/api/hospitals/`
 
-| 메서드 | 경로 | 설명 |
-|---|---|---|
-| GET | `/api/hospitals/` | 병원 목록 |
-| POST | `/api/hospitals/` | 병원 생성 |
-| GET | `/api/hospitals/{id}/` | 병원 상세 |
+| 메서드      | 경로                   | 설명      |
+| ----------- | ---------------------- | --------- |
+| GET         | `/api/hospitals/`      | 병원 목록 |
+| POST        | `/api/hospitals/`      | 병원 생성 |
+| GET         | `/api/hospitals/{id}/` | 병원 상세 |
 | PUT / PATCH | `/api/hospitals/{id}/` | 병원 수정 |
-| DELETE | `/api/hospitals/{id}/` | 병원 삭제 |
+| DELETE      | `/api/hospitals/{id}/` | 병원 삭제 |
 
 요청/응답 필드: `id`, `name`, `region`
 
 ### 2. 치료 가격 CRUD — `/api/prices/`
 
-| 메서드 | 경로 | 설명 |
-|---|---|---|
-| GET | `/api/prices/` | 가격 목록 |
-| POST | `/api/prices/` | 가격 등록 |
-| GET | `/api/prices/{id}/` | 가격 상세 |
+| 메서드      | 경로                | 설명      |
+| ----------- | ------------------- | --------- |
+| GET         | `/api/prices/`      | 가격 목록 |
+| POST        | `/api/prices/`      | 가격 등록 |
+| GET         | `/api/prices/{id}/` | 가격 상세 |
 | PUT / PATCH | `/api/prices/{id}/` | 가격 수정 |
-| DELETE | `/api/prices/{id}/` | 가격 삭제 |
+| DELETE      | `/api/prices/{id}/` | 가격 삭제 |
 
 요청 필드: `hospital`(병원 id), `treatment_name`, `listed_price`, `guaranteed_price`
 응답에는 `hospital_name`이 추가로 포함됩니다.
@@ -94,7 +98,7 @@ Base URL: `http://127.0.0.1:8000`
 ```bash
 python -m venv venv
 venv\Scripts\activate
-pip install django djangorestframework
+pip install -r requirements.txt
 
 python manage.py migrate
 python manage.py runserver
